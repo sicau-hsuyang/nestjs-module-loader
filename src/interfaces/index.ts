@@ -8,7 +8,7 @@ export interface ComponentEnhanceLoadType {
   /**
    * 指定加载的上下文路径
    */
-  ctxDir?: string;
+  ctxDir: string;
   /**
    * 排除的路径
    */
@@ -44,20 +44,20 @@ export interface ModuleLoaderMetadata {
    * Optional list of imported modules that export the providers which are
    * required in this module.
    */
-  imports: Array<LoaderEnhancedImportDefine>;
+  imports: ComponentEnhanceLoadType | Array<LoaderEnhancedImportDefine>;
   /**
    * Optional list of controllers defined in this module which have to be
    * instantiated.
    */
-  controllers?: Array<LoaderEnhancedControllerDefine>;
+  controllers: ComponentEnhanceLoadType | Array<LoaderEnhancedControllerDefine>;
   /**
    * Optional list of providers that will be instantiated by the Nest injector
    * and that may be shared at least across this module.
    */
-  providers?: Array<LoaderEnhancedProviderDefine>;
+  providers: ComponentEnhanceLoadType | Array<LoaderEnhancedProviderDefine>;
   /**
    * Optional list of the subset of providers that are provided by this module
    * and should be available in other modules which import this module.
    */
-  exports?: Array<LoaderEnhancedExportDefine>;
+  exports: ComponentEnhanceLoadType | Array<LoaderEnhancedExportDefine>;
 }

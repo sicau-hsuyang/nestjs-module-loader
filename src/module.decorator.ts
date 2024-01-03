@@ -22,9 +22,13 @@ function isGlobLoadConfig(obj: unknown) {
   return isObj(obj) && typeof (obj as ComponentEnhanceLoadType).pattern === "string";
 }
 
-function mergeMeta<T, R>(controls: T[] = []): R[] {
-  const batchMetaDefine = controls.filter((v) => isGlobLoadConfig(v)) as ComponentEnhanceLoadType[];
-  const transmissionMetaDefine = controls.filter((v) => !isGlobLoadConfig(v)) as unknown as R[];
+function mergeMeta<T, R>(controls: T | T[] = []): R[] {
+  const batchMetaDefine = (
+    Array.isArray(controls) ? controls.filter((v) => isGlobLoadConfig(v)) : [controls]
+  ) as ComponentEnhanceLoadType[];
+  const transmissionMetaDefine = Array.isArray(controls)
+    ? (controls.filter((v) => !isGlobLoadConfig(v)) as unknown as R[])
+    : [];
   let parsedMetaRecord: R[] = [];
   batchMetaDefine.forEach((config) => {
     const moduleFiles = globSync(config.pattern, {
@@ -44,7 +48,7 @@ function mergeMeta<T, R>(controls: T[] = []): R[] {
   return mergedImports as R[];
 }
 
-export function EnhancedModule(metadata: ModuleLoaderMetadata): ClassDecorator {
+export function EnhancedModule(metadata: Partial<ModuleLoaderMetadata>): ClassDecorator {
   const imports = mergeMeta<LoaderEnhancedImportDefine, NestImportDefine>(metadata.imports);
   const controllers = mergeMeta<LoaderEnhancedControllerDefine, NestControllerDefine>(metadata.controllers);
   const providers = mergeMeta<LoaderEnhancedProviderDefine, NestProviderDefine>(metadata.providers);
