@@ -1,0 +1,28 @@
+{
+  "name": "nestjs-module-loader",
+  "version": "1.0.0",
+  "description": "the nestjs module loader",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -p tsconfig.json --watch",
+    "build": "rimraf -rf dist && tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sicau-hsuyang/nestjs-module-loader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sicau-hsuyang/nestjs-module-loader/issues"
+  },
+  "homepage": "https://github.com/sicau-hsuyang/nestjs-module-loader#readme",
+  "dependencies": {
+    "@nestjs/common": "^10.3.0",
+    "glob": "^10.3.10",
+    "rimraf": "^5.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6"
+  }
+}
