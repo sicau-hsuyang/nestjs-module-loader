@@ -12,7 +12,7 @@ export interface ComponentEnhanceLoadType {
   /**
    * 排除的路径
    */
-  exclude?: string[];
+  exclude?: string | string[];
 }
 
 export type NestImportDefine = Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference;

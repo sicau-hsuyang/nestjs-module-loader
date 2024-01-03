@@ -1,6 +1,6 @@
 {
   "name": "nestjs-module-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "the nestjs module loader",
   "main": "dist/module.decorator.js",
   "scripts": {
