@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EnhancedModule } from '../../dist/module.decorator';
+import { EnhancedModule } from 'nestjs-module-loader';
 
 // @Module({
 //   imports: [],
@@ -15,5 +15,13 @@ import { EnhancedModule } from '../../dist/module.decorator';
       ctxDir: __dirname,
     },
   ],
+  controllers: [
+    {
+      pattern: 'controllers/*.controller.js',
+      ctxDir: __dirname,
+    },
+    AppController,
+  ],
+  providers: [AppService],
 })
 export class AppModule {}

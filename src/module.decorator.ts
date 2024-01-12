@@ -1,6 +1,7 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { globSync } from "glob";
 import { resolve } from "path";
+import { existsSync } from "fs";
 import {
   ComponentEnhanceLoadType,
   LoaderEnhancedControllerDefine,
@@ -13,6 +14,8 @@ import {
   NestImportDefine,
   NestProviderDefine,
 } from "./interfaces";
+
+const logger = new Logger("EnhancedModule");
 
 function isObj(obj: unknown) {
   return Object.prototype.toString.call(obj) === "[object Object]";
@@ -38,8 +41,14 @@ function mergeMeta<T, R>(controls: T | T[] = []): R[] {
     parsedMetaRecord = parsedMetaRecord.concat(
       moduleFiles.reduce((accumulateImports, file) => {
         const absPath = resolve(config.ctxDir, file);
+        if (!existsSync(absPath)) {
+          throw new Error("指定的文件不存在，请确认您的配置~");
+        }
         const defineModuleEntry = require(absPath);
         const defineModule = Object.values(defineModuleEntry);
+        defineModule.forEach((defineOneModule) => {
+          logger.log(`the component ${(defineOneModule as Function).name} is by loaded`);
+        });
         return accumulateImports.concat(defineModule);
       }, [])
     );
